@@ -1,7 +1,7 @@
-import {URL} from 'node:url';
+import type {URL} from 'node:url';
 import is, {assert} from '@sindresorhus/is';
 import asPromise from './as-promise/index.js';
-import {
+import type {
 	GotReturn,
 	ExtendOptions,
 	Got,
@@ -14,8 +14,8 @@ import {
 	StreamOptions,
 } from './types.js';
 import Request from './core/index.js';
-import {Response} from './core/response.js';
-import Options, {OptionsInit} from './core/options.js';
+import type {Response} from './core/response.js';
+import Options, {type OptionsInit} from './core/options.js';
 import type {CancelableRequest} from './as-promise/types.js';
 
 // The `delay` package weighs 10KB (!)
@@ -73,7 +73,7 @@ const create = (defaults: InstanceDefaults): Got => {
 		const iterateHandlers = (newOptions: Options): GotReturn => {
 			const handler = defaults.handlers[iteration++] ?? lastHandler;
 
-			const result = handler(newOptions, iterateHandlers) as GotReturn;
+			const result = handler(newOptions, iterateHandlers) as GotReturn; // eslint-disable-line @typescript-eslint/no-unnecessary-type-assertion
 
 			if (is.promise(result) && !request.options.isStream) {
 				if (!promise) {
